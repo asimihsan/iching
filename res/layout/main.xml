@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_drawing"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+	<com.gyrovague.iching.DrawViewBackgroundProgress
+	        android:id="@+id/draw_view_background_progress"
+	        android:layout_width="fill_parent"
+	        android:layout_height="fill_parent" />
+	                      
+    <com.gyrovague.iching.DrawViewHelpText
+            android:id="@+id/draw_view_help_text"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" />
+            
+    <com.gyrovague.iching.DrawViewRevealHexagram
+            android:id="@+id/draw_view_reveal_hexagram"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" />                
+    
+</merge>

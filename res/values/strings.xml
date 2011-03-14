@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hello">Hello World, ShakeActivity!</string>
+    <string name="app_name">IChing</string>
+    <string name="help_text">Hold a question firmly in mind, then shake the phone until the screen turns entirely black...</string>
+</resources>
