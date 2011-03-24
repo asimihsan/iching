@@ -178,9 +178,8 @@ public class AccelerometerManager implements SensorListener {
             // already been stopped, but calling quit() sets
             // the Looper's internal mQueue to null and
             // I can't see a way of querying mQueue's state.
-        }
-        
-        
+        }        
+        mChildHandler = null;
     } // public void stop()
    
     public void onAccuracyChanged(int sensor, int accuracy) {                

@@ -8,6 +8,7 @@ package com.gyrovague.iching;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -47,7 +48,7 @@ public class ShakeActivity extends Activity {
     private static final int STATE_HEXAGRAM_SHOWN       = 6;
     
     /**
-     * What during of shaking is required to generate a hexagram.  If the user
+     * What duration of shaking is required to generate a hexagram.  If the user
      * stops shaking before the total time of shaking exceeds this number
      * then prompt them to shake more. 
      */
@@ -192,6 +193,12 @@ public class ShakeActivity extends Activity {
                         // then make it so.
                         mState = STATE_FINISHED;
                         mAM.stop();
+                        
+                        Log.i(SUB_TAG, "calling DivinationActivity");
+                        Intent intent = new Intent(Intent.ACTION_VIEW);            
+                        intent.setClassName(myContext, DivinationActivity.class.getName());
+                        intent.putExtra("hexagram", Integer.toString(current_hexagram));
+                        startActivity(intent);                        
                         break;
                         
                 } // switch(msg.what)                
@@ -214,6 +221,6 @@ public class ShakeActivity extends Activity {
     @Override
     public void onPause() {
         super.onPause();
-        mAM.stop();
+        mAM.stop();                
     } // public void onPause()
 }
