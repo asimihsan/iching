@@ -50,9 +50,34 @@
                 <p>Hold a question in your mind, shake the phone, and an answer of subtle wisdom shall be yours!</p>
                 <p>This is the first Android application I've written and is largely intended as in introduction to the basics of Android development.  Please see the <a href="#developer">Developer's Guide</a> for more information.</p>
             <h2><a name="download">Download</a></h2>
-                <p>Although currently unavailable on Android Market, you can <a href="https://github.com/asimihsan/iching/tree/master/bin/IChing_release.apk">download the APK file</a> from the <a href="https://github.com/asimihsan/iching">GitHub repository</a>, copy it onto a memory card, and install it using <a href="http://www.brighthub.com/mobile/google-android/articles/37151.aspx">App Installer</a>.</p>
+                <p>Although currently unavailable on Android Market, you can <a href="https://github.com/asimihsan/iching/raw/master/bin/IChing_release.apk">download the APK file</a> from the <a href="https://github.com/asimihsan/iching">GitHub repository</a>, copy it onto a memory card, and install it using <a href="http://www.brighthub.com/mobile/google-android/articles/37151.aspx">App Installer</a>.</p>
             <h2><a name="developer">Developer's guide</a></h2>
-            
+            <p>The user experience of the I Ching application is that as they shake their phone then the screen continuously replaces the grey background with black until, after five seconds of cumulative shaking, they are displayed an I Ching hexagram and its respective description.  They can then go back and re-shake the phone.</p>
+            <p>There are two main classes, each with their own <a href="http://developer.android.com/reference/android/os/Handler.html">Handler</a> objects running in distinct threads:
+            <ul>
+                <li><strong>ShakeActivity</strong>: At start of day it:
+                <ul>
+                <li>draws the grey background and help text that says "Please shake the phone".</li>
+                <li>starts the AccelerometerManager.</li>
+                </ul></li>
+                <li>When its Handler receives <span class="mono">MSG_TYPE_START_SHAKING</span> messages it continuously fills the screen with black, and keeps itself going by continuously shaking by sending itself <span class="mono">MSG_TYPE_SILL_SHAKING</span> messages.  When it has shaken enough it:
+                <ul>
+                <li>creates an instance of <strong>MersennseTwister</strong> and seeds it with <span class="mono">AccelerometerManager::getEntropy()</span>, in order to get an integer corresponding to a random integer.</li>
+                <li>starts <strong>DivinationActivity</strong> with the hexagram's integer, which loads up the correct HTML description.</li>
+                </ul></li>
+                <li><strong>AccelerometerManager</strong>: Implements the SensorListener interface and when shaking of sufficient force occurs it sends ShakeActivity's Handler a <span class="mono">MSG_TYPE_START_SHAKING</span> message.  When it stops shaking it sends a <span class="mono">MSG_TYPE_STOP_SHAKING</span> message to ShakeActivity's Handler.</li>
+            </ul>
+            </p>
+            <p>
+                <figure>
+                    <img src="img/high_level_sequence.png" width=699 height=426 alt="High level sequence to start/stop shaking" />
+                    <figcaption>Sequence diagram that shows how startup and how AccelerometerManager informs ShakeActivity of when shaking starts/stops.</figcaption>
+                </figure>
+                <figure>
+                    <img src="img/fsms.png" width=641 height=435alt="ShakeActivity finite state machine (FSM)" />
+                    <figcaption>ShakeActivity finite state machine (FSM).</figcaption>
+                </figure>                
+            </p>
             </div>            
         </article>
     </section>
